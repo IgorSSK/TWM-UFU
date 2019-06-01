@@ -1,9 +1,6 @@
-import React from 'react';
+import React from 'react'
+import Routes from './routes'
 
-import { View, Text } from 'react-native';
-
-const App = () => <View>
-    <Text>Hello World!</Text>
-</View>
+const App = () => <Routes/>
 
 export default App;
