@@ -1,0 +1,11 @@
+.page-container {
+    display: flex;
+    flex-direction: row;
+    background: rgba(36, 166, 221, 0.05);
+}
+
+.content-container {
+    overflow: auto;
+    padding: 25px;
+    width: 100%;
+}

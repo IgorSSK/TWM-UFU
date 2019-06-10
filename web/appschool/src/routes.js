@@ -1,24 +1,16 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation'
+import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { colors, fonts } from './styles/index'
-import Login from './pages/Login/index'
+import Login from './pages/login/index'
+import Main from './pages/main/index'
 
-const RootStack = createStackNavigator(
-  {
-    Home: {
-      screen: Login
-    }
-  },
-  {
-    defaultNavigationOptions:{
-      headerStyle:{
-        backgroundColor: colors.darker,
-        shadowOpacity: 0,
-        elevation: 0
-      },
-      headerTintColor: colors.white
-    }
-  }
+const Routes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path={['/','/login']} component={ Login } />
+      <Route path='/home' component={ Main } />
+    </Switch>
+  </BrowserRouter>
 )
 
-export default createAppContainer(RootStack)
+export default Routes
