@@ -7,29 +7,16 @@ class AdministratorSchema extends Schema {
   up () {
     this.create('administrators', (table) => {
       table.increments()
+      table.integer('classId')
+      .unsigned()
+      .references('id')
+      .inTable('classes')
       table.string('name', 50).notNullable()
       table.string('phoneNumber', 15).notNullable()
       table.string('email', 45).notNullable()
       table.bool('supervisorPermit').notNullable()
       table.timestamps()
     })
-
-    this.alter('administrators', (table) => {
-      table.integer('classId')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('classes')
-    })
-
-    this.alter('students', (table) => {
-      table.integer('classId')
-      .notNullable()
-      .unsigned()
-      .references('id')
-      .inTable('classes')
-    })
-
   }
 
   down () {

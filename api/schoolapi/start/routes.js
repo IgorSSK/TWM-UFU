@@ -21,5 +21,6 @@ Route.post('auth', 'AuthController.authenticate')
 
 Route.group(() => {
   Route.resource('api/students', 'StudentController').apiOnly()
+  Route.resource('api/classes', 'ClassController').apiOnly()
 })
 

@@ -1,5 +1,7 @@
 'use strict'
 
+const Classes = use('App/Models/Class')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -17,19 +19,11 @@ class ClassController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
+  async index () {
+    const classes = await Classes.all()
 
-  /**
-   * Render a form to be used for creating a new class.
-   * GET classes/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return classes
+
   }
 
   /**
@@ -40,7 +34,20 @@ class ClassController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+
+    try {
+
+      const data = request.all()
+      const clas = Classes.create(data)
+
+      return clas
+
+    } catch (error) {
+
+      return error
+    }
+
   }
 
   /**

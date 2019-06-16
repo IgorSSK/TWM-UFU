@@ -10,6 +10,7 @@ const Student = use('App/Models/Student')
  * Resourceful controller for interacting with students
  */
 class StudentController {
+
   /**
    * Show a list of all students.
    * GET students
@@ -26,18 +27,6 @@ class StudentController {
   }
 
   /**
-   * Render a form to be used for creating a new student.
-   * GET students/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
    * Create/save a new student.
    * POST students
    *
@@ -45,7 +34,22 @@ class StudentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+
+    try {
+
+      const data = request.all()
+      console.log(data)
+      const students = await Student.create({ data })
+
+      return students
+
+    } catch (error) {
+
+      return error
+    }
+
+
   }
 
   /**
@@ -57,19 +61,11 @@ class StudentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params }) {
 
-  /**
-   * Render a form to update an existing student.
-   * GET students/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    const student = await Student.findOrFail(params.id)
+    return student
+
   }
 
   /**
@@ -80,7 +76,15 @@ class StudentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ request, response }) {
+
+    const { id, ...data } = request.only(['content'])
+
+    const student = await Student.findOrFail(id)
+    student = data
+
+    student.save()
+
   }
 
   /**
@@ -91,7 +95,11 @@ class StudentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+
+    const student = await User.findOrFail(params.id)
+    await student.delete()
+
   }
 }
 
