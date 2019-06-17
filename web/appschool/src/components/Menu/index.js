@@ -6,33 +6,29 @@ import logo_title from '../../images/logoText.png'
 import logo_img from '../../images/logoSchool.png'
 
 const Menu = () => (
-    <nav className='menu-container'>
-        <div className='header-menu'>
-            <Link to='/home'>
-                <img className='logo-image' src={ logo_img } alt='Logo Image'/>
-                <img className='logo-text' src={ logo_title } alt='Logo Text'/>
-            </Link>
+    <div className="menu-container">
+        <nav className="navbar navbar-light">
+          <Link className="navbar-brand text-white" to="#">
+            <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" className="d-inline-block align-top shadow-lg" alt="" />
+              School App
+          </Link>
 
-        </div>
-        <div className='body-menu'>
-            <div className='navbar-collapse offcanvas-collapse' id='navbarsExampleDefault'>
-                <div className='list-group'>
-                        <a href='#' className='list-group-item list-group-item-action'>Dashboard</a>
-                        <a href='#' className='list-group-item list-group-item-action'>Shortcuts</a>
-                        <a href='#' className='list-group-item list-group-item-action'>Overview</a>
-                        <a href='#' className='list-group-item list-group-item-action'>Events</a>
-                        <a href='#' className='list-group-item list-group-item-action'>Profile</a>
-                        <a href='#' className='list-group-item list-group-item-action'>Status</a>
-                </div>
+          <div id="navbar">
+            <div className="list-group list-group-flush">
+              <Link to="/dashboard" className="menu-item list-group-item list-group-item-action text-white">Dashboard</Link>
+              <Link to="/students" className="menu-item list-group-item list-group-item-action text-white">Alunos</Link>
+              <Link to="/classes" className="menu-item list-group-item list-group-item-action text-white">Turmas</Link>
+              <Link to="/news" className="menu-item list-group-item list-group-item-action text-white">Noticias</Link>
+              <Link to="/profile" className="menu-item list-group-item list-group-item-action text-white">Perfil</Link>
             </div>
+          </div>
 
-        </div>
-        <div className='footer-menu'>
-            <Link className='btn-danger' to='/logout'>
-                <span>Log-out</span>
-            </Link>
-        </div>
-    </nav>
+          <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">
+            LOGOUT
+          </button>
+
+        </nav>
+    </div>
 )
 
 export default Menu
