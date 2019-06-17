@@ -1,0 +1,30 @@
+.body-container {
+    height: 100%;
+    background: white;
+    width: 80%;
+    overflow-y: auto;
+}
+
+.header-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(160deg, rgb(0, 33, 66, 0.919) -10%, rgba(36, 166, 221, 0.6) 700%);
+    width: 0%;
+    color: white;
+}
+
+.content-container {
+    margin: 1rem auto 1rem; padding: 3rem;
+}
+
+.accordion .card {
+    width: 33.33%; 
+    position: static;
+}
+
+.accordion-body-container {
+    padding: 1rem;
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+    border: 1px solid rgba(0,0,0,.125);
+}
