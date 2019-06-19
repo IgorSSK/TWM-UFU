@@ -40,7 +40,7 @@ class StudentController {
 
       const data = request.all()
       console.log(data)
-      const students = await Student.create({ data })
+      const students = await Student.create(data)
 
       return students
 
