@@ -17,27 +17,23 @@ const routes = [
   {
     index: 1,
     path: '/dashboard',
-    main: () => <Dashboard/>
+    main: () => <div className='main-container'><Menu/><Dashboard/></div>
   },
   {
     index: 2,
     path: '/students',
-    main: () => <Students/>
+    main: () => <div className='main-container'><Menu/><Students/></div>
   },
   {
     index: 3,
     path: '/classes',
-    main: () => <Classes/>
+    main: () => <div className='main-container'><Menu/><Classes/></div>
   }
 ]
 
 function Routes() {
   return (
     <Router>
-
-      <div className='main-container'>
-
-        <Menu/>
 
         {routes.map((route, index) => (
             <Route
@@ -48,8 +44,6 @@ function Routes() {
             />
           ))}
 
-      </div>
-      
     </Router>
   );
 }
