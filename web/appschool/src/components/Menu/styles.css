@@ -1,0 +1,36 @@
+.menu-container {
+    height: 100%;
+    width: 20%;
+    background: transparent;
+}
+
+.menu-container .navbar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    padding-right: .1rem;
+    padding-left: .1rem;
+}
+
+.menu-item {
+	background: transparent;
+	transition: 0.2s;
+}
+
+.menu-item:hover {
+	font-size: 2rem;
+	background: transparent;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.menu-item:focus, .menu-item:active {
+	border-right: 3px solid white;
+	background: transparent;
+
+}
+
+#navbar {
+    width: 100%;
+}

@@ -1,24 +1,33 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation'
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import { colors, fonts } from './styles/index'
-import Login from './pages/Login/index'
+import Login from './pages/login/index'
+import Dashboard from './pages/dashboard/index'
+import Students from './pages/students/index'
+import Classes from './pages/classes/index'
+import Menu from './components/Menu/index'
 
-const RootStack = createStackNavigator(
-  {
-    Home: {
-      screen: Login
-    }
-  },
-  {
-    defaultNavigationOptions:{
-      headerStyle:{
-        backgroundColor: colors.darker,
-        shadowOpacity: 0,
-        elevation: 0
-      },
-      headerTintColor: colors.white
-    }
-  }
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route { ...rest } render={ props => 
+    isAuthenticaded() ? (<Component { ...props } />) : (<Redirect to={{ pathname:'/', state: { from: props.location }}} />)
+  } 
+  />
 )
 
-export default createAppContainer(RootStack)
+const Routes = () => (
+  <Router>
+    <Switch>
+      <Route exact path='/' component={ () => <Login/> } />
+
+      <PrivateRoute path='/dashboard' component={ () => <div className='main-container'><Menu/><Dashboard/></div> } />
+
+      <PrivateRoute path='/students' component={ () => <div className='main-container'><Menu/><Students/></div> } />
+
+      <PrivateRoute path='classes' component={ () => <div className='main-container'><Menu/><Classes/></div> } />
+
+    </Switch>
+  </Router>
+)
+
+
+export default Routes
