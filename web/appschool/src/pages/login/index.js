@@ -1,53 +1,56 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
  
 import api from '../../services/api'
 import './styles.css'
 
 
-export default class Login extends Component {
+class Login extends Component {
 
   state = {
-    login: { email:'', password:'' }
-  } 
-
-  mailInputHandler = email => {
-    this.setState({ login:{ email } })
-  }
-
-  passInputHandler = password => {
-    this.setState({ login:{ password } })
+    email:'', 
+    password:'',
+    error:''
   }
 
   render() {
     return (
       <div className='login'>
-        <form onSubmit={ this.signin }>
+        <form onSubmit={ this.signinHandler }>
           <h3>Login</h3>
+          { this.state.error && <p>{ this.state.error }</p> }
           <div>
             <label>E-mail</label>
-            <input type='email' name='email' onInput={ this.mailInputHandler }/>
+            <input type='email' placeholder='E-mail' name='email' onChange={ e =>  this.setState({ email: e.target.value }) }/>
           </div>
           <div>
             <label>Password</label>
-            <input type='password' onInput={ this.mailInputHandler } />
+            <input type='password' placeholder='Password' onChange={ e =>  this.setState({ password: e.target.value }) } />
           </div>
-          <div className='login-button'>
-           <a onClick={ this.signin }>Login</a> 
-          </div>
+          <button className='login-button' type='submit'>Login</button>
         </form>
       </div>
     )
   }
 
-  signin = async () => {
-    api.post('/auth', {
-      "email":"igorsouza.96@hotmail.com",
-      "password":"123456"
-    }).then(response => console.log(response)).catch(err => console.log(err))
+  signinHandler = async event => {
+    event.preventDefault()
 
-    var res = await api.get('/api/students')
+    const { email, password } = this.state
 
-    console.log(res)
+    if(email === '') this.setState({ error:'Please, fill the e-mail field!' })
+    if(password === '') this.setState({ error:'Please, fill the password field!' })
+
+    try {
+      
+      const response = await api.post('/sigin', { email, password })
+      console.log(response.data)
+      this.props.history.push('dashboard')
+
+    } catch (error) {
+      this.setState({ error })
+    }
   }
 }
+
+export default withRouter(Login)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import Login from './pages/login/index'
 import Dashboard from './pages/dashboard/index'
@@ -7,46 +7,27 @@ import Students from './pages/students/index'
 import Classes from './pages/classes/index'
 import Menu from './components/Menu/index'
 
-const routes = [
-  {
-    index: 0,
-    path: ['/login', '/'],
-    exact: true,
-    main: () => <Login/> 
-  },
-  {
-    index: 1,
-    path: '/dashboard',
-    main: () => <div className='main-container'><Menu/><Dashboard/></div>
-  },
-  {
-    index: 2,
-    path: '/students',
-    main: () => <div className='main-container'><Menu/><Students/></div>
-  },
-  {
-    index: 3,
-    path: '/classes',
-    main: () => <div className='main-container'><Menu/><Classes/></div>
-  }
-]
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route { ...rest } render={ props => 
+    isAuthenticaded() ? (<Component { ...props } />) : (<Redirect to={{ pathname:'/', state: { from: props.location }}} />)
+  } 
+  />
+)
 
-function Routes() {
-  return (
-    <Router>
+const Routes = () => (
+  <Router>
+    <Switch>
+      <Route exact path='/' component={ () => <Login/> } />
 
-        {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={route.main}
-            />
-          ))}
+      <PrivateRoute path='/dashboard' component={ () => <div className='main-container'><Menu/><Dashboard/></div> } />
 
-    </Router>
-  );
-}
+      <PrivateRoute path='/students' component={ () => <div className='main-container'><Menu/><Students/></div> } />
+
+      <PrivateRoute path='classes' component={ () => <div className='main-container'><Menu/><Classes/></div> } />
+
+    </Switch>
+  </Router>
+)
 
 
 export default Routes
