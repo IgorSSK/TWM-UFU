@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import TabMenu from '../../components/TabMenu/index'
 import StudentList from '../../components/StudentList/index'
