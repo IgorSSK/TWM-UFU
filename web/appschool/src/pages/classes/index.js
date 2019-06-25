@@ -1,44 +1,43 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import api from '../../services/api'
 import TabMenu from '../../components/TabMenu/index'
-import StudentList from '../../components/StudentList/index'
-import Register from '../../components/Register/index'
-import History from '../../components/History/index'
+import ClassList from '../../components/ClassList/index'
+import Register from '../../components/ClassRegister/index'
+import History from '../../components/ClassHistory/index'
 import './styles.css'
 
 class Classes extends Component {
 
     state = {
-        students: []
+        classes: []
     }
 
     listContent = [{
         id: 'One',
-        title: 'Lista Turmas',
-        content: (<StudentList students= { this.state.students } />)
+        title: 'List Classes',
+        content: (<ClassList Class= { this.state.classes } />)
     },
     {
         id: 'Two',
-        title:'Cadastrar Turma',
+        title:'Register Class',
         content: (<Register/>)
     },
     {
         id: 'Three',
-        title: 'Historico Turmas',
+        title: 'Class History',
         content: (<History/>)
     }
     ]
 
-    studentsList = async () => {
+    classList = async () => {
         const response = await api.get('')
 
         console.log(response.data)
     }
 
     componentWillMount(){
-        this.studentsList()
+        this.classList()    
     }
 
     render(){
@@ -48,7 +47,7 @@ class Classes extends Component {
             <div class="header-container"></div>
             
             <div class="fluid-container border content-container">
-                <TabMenu contentArray = { listContent }/>
+                <TabMenu contentArray = { this.listContent }/>
             </div>
         </div>
         )

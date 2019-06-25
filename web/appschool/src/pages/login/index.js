@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
  
+import { login } from '../../services/auth'
 import api from '../../services/api'
 import './styles.css'
-
 
 class Login extends Component {
 
@@ -43,12 +43,16 @@ class Login extends Component {
 
     try {
       
-      const response = await api.post('/sigin', { email, password })
-      console.log(response.data)
-      this.props.history.push('dashboard')
+      const response = await api.post('/auth', { email, password })
+      
+      const { token } = response.data
+
+      if(token) login(token)
+
+      this.props.history.push('/dashboard')
 
     } catch (error) {
-      this.setState({ error })
+      this.setState({ error: 'Invalid email or password' })
     }
   }
 }

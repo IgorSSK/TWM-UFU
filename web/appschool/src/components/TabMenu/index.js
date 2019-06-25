@@ -13,7 +13,7 @@ const TabMenu = ({ contentArray }) => {
             {
                 contentArray.map( content => (
 
-                    <div className='card menu-item'>
+                    <div className='card menu-item' key={ content.id }>
                         <div className='card-header' id={ `heading${ content.id }` }>
                         <h2 className='mb-0'>
                             <button className='btn btn-link' type='button' data-toggle='collapse' data-target={ `#collapse${ content.id }` } aria-expanded='true' aria-controls={ `collapse${ content.id }` }>
@@ -31,7 +31,7 @@ const TabMenu = ({ contentArray }) => {
             {
                 contentArray.map(content => (
 
-                    <div id={ `collapse${ content.id }` } className={ `collapse ${ content.id === 'One' ? 'show' : '' } justify-content-center` } aria-labelledby={ `heading${ content.id }` } data-parent='#contentAccordion'>
+                    <div id={ `collapse${ content.id }` } key={ content.id } className={ `collapse ${ content.id === 'One' ? 'show' : '' } justify-content-center` } aria-labelledby={ `heading${ content.id }` } data-parent='#contentAccordion'>
                         { content.content }
                     </div>
                 ))

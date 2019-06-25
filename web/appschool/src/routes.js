@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
+import { isAuthenticated } from './services/auth'
 import Login from './pages/login/index'
 import Dashboard from './pages/dashboard/index'
 import Students from './pages/students/index'
@@ -9,7 +10,7 @@ import Menu from './components/Menu/index'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route { ...rest } render={ props => 
-    isAuthenticaded() ? (<Component { ...props } />) : (<Redirect to={{ pathname:'/', state: { from: props.location }}} />)
+    isAuthenticated() ? (<Component { ...props } />) : (<Redirect to={{ pathname:'/', state: { from: props.location }}} />)
   } 
   />
 )
@@ -23,7 +24,7 @@ const Routes = () => (
 
       <PrivateRoute path='/students' component={ () => <div className='main-container'><Menu/><Students/></div> } />
 
-      <PrivateRoute path='classes' component={ () => <div className='main-container'><Menu/><Classes/></div> } />
+      <PrivateRoute path='/classes' component={ () => <div className='main-container'><Menu/><Classes/></div> } />
 
     </Switch>
   </Router>
