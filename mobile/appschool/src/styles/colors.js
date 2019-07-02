@@ -9,6 +9,9 @@ export default {
   transparent: 'rgba(0, 0, 0, 0)',
 
   background: 'linear-gradient(160deg, rgba(0,51,102,1) 0%, rgba(215,243,255,1) 100%)',
-  button: 'rgba(89,149,218, 0.15)'
+  button: 'rgba(89,149,218, 0.15)',
+  menu_item: 'rgba(255, 255, 255,0.2)',
+  bt_sucess:'rgba(57,243,103,0.5)',
+  bt_fail:'rgba(232, 23, 23,0.5)'
 
 }
