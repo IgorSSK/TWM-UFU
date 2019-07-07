@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
-import { View, Modal } from 'react-native'
-
-import api from '../../services/api'
-import styles from './style'
+import { View, Modal, Alert } from 'react-native'
 import Button from '../../components/Button/index'
 import FormInput from '../../components/FormInput/index'
+
+import api from '../../services/api'
+import { login, isAuthenticated } from '../../services/auth'
+
+import styles from './style'
 
 export default class Login extends Component {
 
   state = {
     loginType:-1,
-    loginTitle:''
+    loginTitle:'',
+    email:'',
+    password:'',
+    className:'',
+    codeClass:''
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -20,7 +26,6 @@ export default class Login extends Component {
   componentWillMount(){
     const loginType = this.props.navigation.getParam('loginType', -1)
     this.setState({ loginType })
-    //this.signin()
   }
 
   render() {
@@ -28,26 +33,59 @@ export default class Login extends Component {
       return(
         <View style={ styles.container }>
           <View style={{ marginBottom:'25%' }}>
-            <FormInput placeHolder='Código da Turma' inputType='email-address' />
-            <FormInput placeHolder='Senha de Acesso'/>
+            <FormInput placeHolder='Código da Turma' inputType='email-address' onChange={ (className) => this.setState({ className }) } value={ this.state.className }/>
+            <FormInput placeHolder='Senha de Acesso' onChange={ (codeClass) => this.setState({ codeClass }) } value={ this.state.codeClass }/>
           </View>
           <Button srcImage={ require('../../images/check.png') } btnText='Acessar Turma' onClick={ () => this.props.navigation.navigate('News') }/>
         </View>
       )
+    } else {
+      return (
+        <View style={ styles.container }>
+              <View style={{ marginBottom:'25%' }}>
+                <FormInput placeHolder='E-mail' inputType='email-address' onChange={ (email) => this.setState({ email }) } value={ this.state.email }/>
+                <FormInput placeHolder='Senha' onChange={ (password) => this.setState({ password }) } value={ this.state.password }/>
+              </View>
+            <Button srcImage={ require('../../images/check.png') } btnText='Efetuar Login' onClick={ () => this.signin() }/>
+        </View>
+      )
     }
-    return (
-      <View style={ styles.container }>
-            <View style={{ marginBottom:'25%' }}>
-              <FormInput placeHolder='E-mail' inputType='email-address' />
-              <FormInput placeHolder='Senha'/>
-            </View>
-          <Button srcImage={ require('../../images/check.png') } btnText='Efetuar Login' onClick={ () => this.props.navigation.navigate('MainMenu') }/>
-      </View>
-    )
   }
 
   signin = async () => {
-    let response = await api.get('/sayHello')
-    console.warn(response.data)
+    //this.state.loginType == 1 ?
+    //this.props.navigation.navigate('MainMenu')
+    try {
+
+      const { email, password, loginType, className, codeClass } = this.state
+
+      if(loginType === 1){
+
+        //const { data, status } = await api.post('/', { className, codeClass })
+
+        this.props.navigation.navigate('News')
+
+      } else {
+
+        //const { data, status } = await api.post('/auth', { email, password })
+//
+        //if(status === 200) {
+//
+        //  const { token } = data
+//
+        //  login(token)
+
+          //if(isAuthenticated())
+          this.props.navigation.navigate('MainMenu')
+
+        //}
+      }
+
+    } catch (error) {
+
+      Alert.alert('Sigin', 'Usuário não autenticado! Tente novamente!', [], { cancelable: true })
+
+    }
+
   }
 }

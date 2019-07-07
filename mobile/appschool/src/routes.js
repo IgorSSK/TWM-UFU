@@ -6,6 +6,8 @@ import Login from './pages/Login/index'
 import News from './pages/News/index'
 import MainMenu from './pages/MainMenu/index'
 import Attendance from './pages/Attendance/index'
+import Students from './pages/Students/index'
+import History from './pages/History/index'
 
 const RootStack = createStackNavigator(
   {
@@ -27,6 +29,14 @@ const RootStack = createStackNavigator(
 
     Attendance: {
       screen: Attendance
+    },
+
+    Students: {
+      screen: Students
+    },
+
+    History: {
+      screen: History
     }
   },
   {

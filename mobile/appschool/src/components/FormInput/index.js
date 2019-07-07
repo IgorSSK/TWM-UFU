@@ -20,8 +20,8 @@ export default class FormInput extends Component {
           placeholder={ this.props.placeHolder }
           placeholderTextColor='#FFF'
           autoCapitalize='none'
-          onChangeText={ (inputValue) => this.setState({ inputValue }) }
-          value={ this.state.inputValue }
+          onChangeText={ this.props.onChange }
+          value={ this.props.value }
           underlineColorAndroid='transparent'
           keyboardType={ this.props.inputType }
           secureTextEntry={ true }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 
-import { View, FlatList, Text } from 'react-native'
+import { View, FlatList } from 'react-native'
 
 import Button from '../../components/Button/index'
-import TapButton from '../../components/TapButton/index'
+import ListItem from '../../components/ListItem/index'
 
 import api from '../../services/api'
+
 import styles from './styles'
 
 export default class Attendance extends Component {
@@ -24,7 +25,7 @@ export default class Attendance extends Component {
                         students.map(
                           (element) => element.id === id ? {...element,
                                                             status: !element.status,
-                                                            amountFaults: element.amountFaults + 1 } : element
+                                                            amountFaults: element.status ? element.amountFaults + 1 : element.amountFaults - 1 } : element
                         )
 
     this.setState({ students })
@@ -63,16 +64,3 @@ export default class Attendance extends Component {
     )
   }
 }
-
-const ListItem = ({ name, id, faults, status, onTap  }) => (
-  <View style={ styles.list_item } >
-    <View style={{ flex:1 }}>
-      <Text style={ styles.list_text }>{ name }</Text>
-      <View style={ styles.subcontainer }>
-        <Text style={ styles.list_subtext }>{ 'id: ' + id }</Text>
-        <Text style={ styles.list_subtext }>{ 'faltas: ' + faults }</Text>
-      </View>
-    </View>
-    <TapButton keyId={ id } onTap={ onTap } state={ status }/>
-  </View>
-)

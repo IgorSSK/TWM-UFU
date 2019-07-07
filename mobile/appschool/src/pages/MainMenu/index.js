@@ -18,9 +18,9 @@ export default class MainMenu extends Component {
       <ImageBackground source={ require('../../images/background-icon.png') } style={ styles.container } resizeMode='contain'>
         <MenuItem btnText='Turmas' srcImage={ require('../../images/ic_classes.png') }/>
         <MenuItem btnText='Educadores' srcImage={ require('../../images/ic_teachers.png') }/>
-        <MenuItem btnText='Estudantes' srcImage={ require('../../images/ic_students.png') }/>
+        <MenuItem btnText='Estudantes' srcImage={ require('../../images/ic_students.png') } onClick={ () => this.props.navigation.navigate('Students') }/>
         <MenuItem btnText='Chamadas' srcImage={ require('../../images/ic_attendance.png') } onClick={ () => this.props.navigation.navigate('Attendance') }/>
-        <MenuItem btnText='Historico' srcImage={ require('../../images/ic_history.png') }/>
+        <MenuItem btnText='Historico' srcImage={ require('../../images/ic_history.png') } onClick={ () => this.props.navigation.navigate('History') }/>
       </ImageBackground>
     )
   }
