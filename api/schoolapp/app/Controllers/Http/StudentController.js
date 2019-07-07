@@ -80,7 +80,8 @@ class StudentController {
     const student = await Student.findOrFail(id)
     student = data
 
-    student.save()
+    return student
+    //student.save()
   }
 
   /**
