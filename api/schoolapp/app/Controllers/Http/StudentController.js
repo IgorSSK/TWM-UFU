@@ -61,8 +61,9 @@ class StudentController {
   async show ({ params }) {
     const student = await Student.findOrFail(params.id)
     const _class = await student._class().fetch()
+    const history = await student.history().fetch()
 
-    return { student, _class }
+    return { student, _class, history }
   }
 
   /**
@@ -73,15 +74,15 @@ class StudentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ request, response }) {
+  async update ({ request, params }) {
 
-    const { id, ...data } = request.only(['content'])
+    const data = request.all()
+    let student = await Student.findOrFail(params.id)
+    student.merge(data)
 
-    const student = await Student.findOrFail(id)
-    student = data
+    student.save()
 
     return student
-    //student.save()
   }
 
   /**
@@ -97,6 +98,7 @@ class StudentController {
     const student = await User.findOrFail(params.id)
     await student.delete()
 
+    return "Deleted succefully"
   }
 }
 

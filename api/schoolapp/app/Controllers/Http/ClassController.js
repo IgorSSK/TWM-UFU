@@ -35,10 +35,9 @@ class ClassController {
    */
   async store ({ request }) {
     try {
+
       const data = request.all()
-      const classes = await data.classes.map(async cls => { const ret = await Class.create(cls)
-      console.log(ret)
-      return ret})
+      const classes = await Student.createMany(data.classes)
 
       return classes
 

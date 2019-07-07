@@ -5,7 +5,11 @@ const Model = use('Model')
 
 class Student extends Model {
     _class () {
-        return this.hasOne('App/Models/Class')
+      return this.belongsTo('App/Models/Class')
+    }
+
+    history () {
+      return this.hasMany('App/Models/StudentHistory')
     }
 }
 
