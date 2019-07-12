@@ -61,25 +61,25 @@ export default class Login extends Component {
 
       if(loginType === 1){
 
-        //const { data, status } = await api.post('/', { className, codeClass })
+        const { data, status } = await api.post('/', { className, codeClass })
 
         this.props.navigation.navigate('News')
 
       } else {
 
-        //const { data, status } = await api.post('/auth', { email, password })
-//
-        //if(status === 200) {
-//
-        //  const { token } = data
-//
-        //  login(token)
+        const { data, status } = await api.post('/auth', { email, password })
 
-          //if(isAuthenticated())
-          this.props.navigation.navigate('MainMenu')
+        if(status === 200) {
 
-        //}
-      }
+          const { token } = data
+
+          login(token)
+
+          if(isAuthenticated())
+            this.props.navigation.navigate('MainMenu')
+
+          }
+        }
 
     } catch (error) {
 

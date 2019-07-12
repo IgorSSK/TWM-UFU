@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 
 import { View, TextInput, TouchableOpacity, Image, Text } from 'react-native'
 
-import SearchBar from '../../components/SearchBar/index'
-
 import styles from './style';
+import api from '../../services/api'
 
 export default class History extends Component {
 
@@ -25,7 +24,8 @@ export default class History extends Component {
   state = {
     id:'',
     modalVisible: false,
-    student:[]
+    student:{},
+    class: {}
   }
 
   componentWillMount(){
@@ -37,25 +37,30 @@ export default class History extends Component {
     this.setState({ id })
   }
 
-  searchHandler = () => {
-    this.setState({ modalVisible:true })
+  searchHandler = async () => {
+    const {data, status} = await api.get(`/api/students/${ this.state.id }`)
+    if(status === 200) this.setState({ modalVisible:true, student: data.student, class: data._class })
   }
 
   render() {
+    const std = this.state.student
+    const cls = this.state.class
+
     return (
       <View style={ styles.container }>
         { this.state.modalVisible && (<View style={ styles.card }>
           <Image style={ styles.card_image } source={ require('../../images/img_graduate.png') } resizeMode='contain'/>
           <View style={ styles.card }>
-            <Text style={ styles.card_title }>Eis o Historico do Aluno</Text>
-            <Text style={ styles.card_text }>Declaramos que o aluno X frequenta esta instituição. Onde o mesmo pertence atualmente a turma Y e possui Z faltas no período.</Text>
+            <Text style={ styles.card_title }>{ std.studentName }</Text>
+            <Text style={ styles.card_text }>{ `Declaramos que o aluno ${ std.studentName } frequenta esta instituição.
+            Onde o mesmo pertence atualmente a turma ${ cls.className } e possui ${ std.amountFaults } faltas no período.` }</Text>
             <View style={ styles.card_info }>
               <Text style={ styles.card_text }>Nome da Mãe: </Text>
-              <Text style={ styles.card_text }>X</Text>
+              <Text style={ styles.card_text }>{ std.firstResponsibleName }</Text>
             </View>
             <View style={ styles.card_info }>
               <Text style={ styles.card_text }>Nome do Pai: </Text>
-              <Text style={ styles.card_text }>Y</Text>
+              <Text style={ styles.card_text }>{ std.secondResponsibleName }</Text>
             </View>
           </View>
         </View>)}

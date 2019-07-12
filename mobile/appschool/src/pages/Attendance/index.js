@@ -17,7 +17,7 @@ export default class Attendance extends Component {
 
   state = {
     students:[],
-    classe:''
+    classe:'',
   }
 
   statusHandler = (id) => {
@@ -29,6 +29,13 @@ export default class Attendance extends Component {
                         )
 
     this.setState({ students })
+  }
+
+  attendanceHandler = () => {
+    this.state.students.map(async std => {
+      await api.put(`/api/students/${ std.id }`, { amountFaults: std.amountFaults })
+    })
+
   }
 
   async componentWillMount() {
@@ -58,7 +65,11 @@ export default class Attendance extends Component {
                      }
         />
         <View>
-          <Button srcImage={ require('../../images/check.png') } btnText='Finalizar Chamada' style={ styles.button }/>
+          <Button srcImage={ require('../../images/check.png') }
+                  btnText='Finalizar Chamada'
+                  style={ styles.button }
+                  onClick={ this.attendanceHandler() }
+          />
         </View>
       </View>
     )

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 
-import styles from './styles';
+import styles from './styles'
+import api from '../../services/api'
 
 export default class News extends Component {
 
@@ -12,25 +13,36 @@ export default class News extends Component {
     author:'',
     createdAt:'',
     numberOfLines:4,
-    show:false
+    show:false,
+    news:[]
+  }
+
+  async componentDidMount(){
+    const { data, status } = await api.get('/api/news')
+    if(status === 200) this.setState({ news:data })
   }
 
   render() {
     return(
-    <View style={ styles.container }>
-      <View style={ styles.header_container }>
-        <Text style={ styles.title }>Title</Text>
-      </View>
-      <View style={ styles.body_container }>
-        <Text style={ styles.body } numberOfLines={ this.state.numberOfLines }>Part of Body Part of Body Part of Body Part of Body Part of Body Part
-        VPart of Body Part of Body Part of Body Part of Body Part of Body PartPart of Body Part of Body Part of Body Part of Body Part of Body PartPart of Body Part of Body Part of Body Part of Body Part of Body Part of Body Part of Body Part of Body Part of Body Part of BodyPart of Body Part of Body Part of Body Part of Body</Text>
-      </View>
-      <View>
-        <TouchableOpacity style={ styles.button_container } onPress={ () => this.setState({ numberOfLines: !this.state.show ? 8 : 4, show:!this.state.show }) }>
-          <Text style={ styles.buttonText }>{ !this.state.show ? 'Read more' : 'Minimize' }</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      <FlatList
+      data={ this.state.news }
+      keyExtractor={ (item, index) =>  item.id.toString()}
+      renderItem={ ({ item }) => (
+        <View>
+          <View style={ styles.header_container }>
+            <Text style={ styles.title }>{ item.title }</Text>
+          </View>
+          <View style={ styles.body_container }>
+            <Text style={ styles.body }>{ item.body }</Text>
+          </View>
+          <View>
+            <TouchableOpacity style={ styles.button_container } onPress={ () => this.setState({ numberOfLines: !this.state.show ? 8 : 4, show:!this.state.show }) }>
+              <Text style={ styles.buttonText }>{ !this.state.show ? 'Read more' : 'Minimize' }</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+      />
     )
   }
 }
